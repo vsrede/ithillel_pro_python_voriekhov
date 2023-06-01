@@ -16,7 +16,10 @@
     # * add one more input parameter count and multiply by currency (int)
     pass
     """
+# $env:FLASK_APP = "homework_3/main"
+
 from flask import Flask
+from flask import request
 
 app = Flask(__name__)
 
@@ -28,4 +31,10 @@ def hello_world():
 
 @app.route("/students_list")
 def generate_students():
-    pass
+    length_students_list = request.args.get('length', '100')
+    if int(length_students_list) > 1000:
+        return "ERROR: should be less than 1000"
+    else:
+        length_students_list = int(length_students_list)
+
+    return str(length_students_list)
