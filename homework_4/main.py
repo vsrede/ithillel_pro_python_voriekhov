@@ -14,7 +14,7 @@ def hello_world():
 
 args_parser = {
     "country": fields.Str(missing="all"),
-    "track_id": fields.Str(missing='1')
+    "track_id": fields.Str(missing="1")
 }
 
 
@@ -44,7 +44,7 @@ def order_price(args_parser):
 
 @app.route("/get-all-info-about-track")
 @use_args(args_parser, location="query")
-def get_all_info_about_track(args_parser, location="query"):
+def get_all_info_about_track(args_parser):
     """
         # join all possible tables and show all possible info about all tracks
         # as input track ID
@@ -65,3 +65,14 @@ def get_all_info_about_track(args_parser, location="query"):
     return format_records(result)
 
 
+@app.route("/get_all_info_about_track")
+def get_times_info_about_track():
+    """
+        # show time of all tracks of all albums in hours
+        # use info about all tracks
+    """
+    query = "SELECT albums.Title, SUM(tracks.Milliseconds)/3600000.0 " \
+            "AS TOTAL FROM albums JOIN tracks ON tracks.AlbumId = albums.AlbumId " \
+            "GROUP BY albums.Title"
+    result = execute_querry(query=query)
+    return format_records(result)
