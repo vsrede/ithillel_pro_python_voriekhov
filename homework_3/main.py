@@ -110,19 +110,16 @@ def get_bitcoin_value(currency, convert):
     # currency = request.args.get("currency", "USD")
     # convert = request.args.get("convert", "1")
     # convert = int(convert)
-    url = "https://bitpay.com/api/rates"
-    list_currency_btc = requests.get(url, {})
-    if list_currency_btc.status_code != 200:
-        return Response("ERROR: Something went wrong", status=list_currency_btc.status_code)
-    list_currency_btc = list_currency_btc.json()
-
-    print(type(currency))
-    print(type(list_currency_btc))
-    value_currency = next((d for d in list_currency_btc if d.get('code') == currency), None)
+    url = "https://bitpay.com/rates/" + currency
+    list_currency_btc = requests.get(url, {}).json()
+    # if list_currency_btc.status_code != 200:
+    #     return Response("ERROR: Something went wrong", status=list_currency_btc.status_code)
+    value_currency = list_currency_btc['data']['rate']
+    # value_currency = next((d for d in list_currency_btc if d.get('code') == currency), None)
     if convert == 1:
-        result = f"Bitcoin exchange rate is {value_currency['rate']} {symbol(currency)}"
+        result = f"Bitcoin exchange rate is {value_currency} {symbol(currency)}"
     else:
-        result = f"Bitcoin exchange rate is {value_currency['rate']} {symbol(currency)}. " \
-                 f"You need {value_currency['rate'] * convert} {value_currency['name']}s for buy {convert} BTC"
+        result = f"Bitcoin exchange rate is {value_currency} {symbol(currency)}. " \
+                 f"You need {value_currency * convert}, {currency} for buy {convert} BTC"
 
     return result
