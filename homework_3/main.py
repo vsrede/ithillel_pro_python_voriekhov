@@ -1,10 +1,13 @@
 import csv
+import pprint
+
 import requests
 
 from faker import Faker
 from flask import Flask, Response
 from flask import request
-
+from webargs import fields
+from webargs.flaskparser import use_kwargs
 from homework_3.utilities.csv_printer import csv_printer
 from homework_3.utilities.symbol import symbol
 
@@ -20,7 +23,13 @@ def hello_world():
 
 
 @app.route("/students_list")
-def generate_students():
+@use_kwargs(
+    {
+        "length_students_list": fields.Int(missing=1, validate=lambda val: val < 1000)
+    },
+    location="query"
+)
+def generate_students(length_students_list):
     """def generate_students():
         # count should be as input GET parameter
         # first_name, last_name, email, password, birthday (18-60)
@@ -30,13 +39,13 @@ def generate_students():
         *********************
     """
     fake = Faker()
-    length_students_list = request.args.get("length", "100")
+    # length_students_list = request.args.get("length", "100")
 
-    if int(length_students_list) > 1000:
-        return "ERROR: should be less than 1000"
-    else:
-        length_students_list = int(length_students_list)
-
+    # if int(length_students_list) > 1000:
+    #     return "ERROR: should be less than 1000"
+    # else:
+    #     length_students_list = int(length_students_list)
+    pprint.pprint(length_students_list)
     route_to_cvs = "homework_3/attachments/db_students.csv"
     list_students = []
     csv_columns = ["first_name", "last_name", "email", "password", "date_of_birth"]
@@ -77,7 +86,15 @@ def generate_students():
 
 
 @app.route("/bitcoin_value")
-def get_bitcoin_value():
+@use_kwargs(
+    {
+        "currency": fields.Str(missing="USD"),
+        "convert": fields.Int(missing=1, validate=lambda val: val < 1000)
+
+    },
+    location="query"
+)
+def get_bitcoin_value(currency, convert):
     """
         def get_bitcoin_value():
         # https://bitpay.com/api/rates
@@ -90,9 +107,9 @@ def get_bitcoin_value():
         # * add one more input parameter count and multiply by currency (int)
         pass
         """
-    currency = request.args.get("currency", "USD")
-    convert = request.args.get("convert", "1")
-    convert = int(convert)
+    # currency = request.args.get("currency", "USD")
+    # convert = request.args.get("convert", "1")
+    # convert = int(convert)
     url = "https://bitpay.com/api/rates"
     list_currency_btc = requests.get(url, {})
     if list_currency_btc.status_code != 200:
@@ -106,8 +123,6 @@ def get_bitcoin_value():
         result = f"Bitcoin exchange rate is {value_currency['rate']} {symbol(currency)}"
     else:
         result = f"Bitcoin exchange rate is {value_currency['rate']} {symbol(currency)}. " \
-                 f"You need {value_currency['rate']*convert} {value_currency['name']}s for buy {convert} BTC"
+                 f"You need {value_currency['rate'] * convert} {value_currency['name']}s for buy {convert} BTC"
 
     return result
-
-
