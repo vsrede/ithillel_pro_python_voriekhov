@@ -45,7 +45,6 @@ def generate_students(length_students_list):
     #     return "ERROR: should be less than 1000"
     # else:
     #     length_students_list = int(length_students_list)
-    pprint.pprint(length_students_list)
     route_to_cvs = "homework_3/attachments/db_students.csv"
     list_students = []
     csv_columns = ["first_name", "last_name", "email", "password", "date_of_birth"]
