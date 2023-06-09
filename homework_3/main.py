@@ -111,9 +111,10 @@ def get_bitcoin_value(currency, convert):
     # convert = request.args.get("convert", "1")
     # convert = int(convert)
     url = "https://bitpay.com/rates/" + currency
-    list_currency_btc = requests.get(url, {}).json()
+    list_currency_btc = requests.get(url, {})
     # if list_currency_btc.status_code != 200:
     #     return Response("ERROR: Something went wrong", status=list_currency_btc.status_code)
+    list_currency_btc = requests.get(url, {}).json()
     value_currency = list_currency_btc['data']['rate']
     # value_currency = next((d for d in list_currency_btc if d.get('code') == currency), None)
     if convert == 1:
