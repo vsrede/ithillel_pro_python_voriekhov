@@ -1,7 +1,6 @@
 from flask import Flask
 from webargs import fields
-from webargs.flaskparser import use_args
-
+from webargs.flaskparser import use_kwargs
 from homework_4.utilities.utilities import format_records, execute_querry
 
 app = Flask(__name__)
@@ -12,15 +11,14 @@ def hello_world():
     return "<p>Hello, World!</p>"
 
 
-args_parser = {
-    "country": fields.Str(missing="all"),
-    "track_id": fields.Str(missing="1")
-}
-
-
 @app.route("/order-price")
-@use_args(args_parser, location="query")
-def order_price(args_parser):
+@use_kwargs(
+    {
+        "country": fields.Str(missing="")
+    },
+    location="query"
+)
+def order_price(country):
     """# UnitPrice * Quantity - sales.
         # Calculate sales
         # Add possibility to get sum of sales data by Country
@@ -28,8 +26,7 @@ def order_price(args_parser):
         # join two tables invoices and invoices_items
         pass
         # show sales by country on page / if no country show all sales by all counties."""
-    country = args_parser['country']
-    if country == "all":
+    if country == "" or country == '""':
         query = "SELECT invoices.BillingCountry, SUM(invoice_items.UnitPrice * invoice_items.Quantity) " \
                 "AS TOTAL FROM invoice_items JOIN invoices ON invoice_items.InvoiceId = invoices.InvoiceId " \
                 "GROUP BY invoices.BillingCountry"
@@ -43,13 +40,17 @@ def order_price(args_parser):
 
 
 @app.route("/get-all-info-about-track")
-@use_args(args_parser, location="query")
-def get_all_info_about_track(args_parser):
+@use_kwargs(
+    {
+        "track_id": fields.Int(missing=1)
+    },
+    location="query"
+)
+def get_all_info_about_track(track_id):
     """
         # join all possible tables and show all possible info about all tracks
         # as input track ID
     """
-    track_id = int(args_parser["track_id"])
     query = "SELECT * FROM tracks " \
             "JOIN playlist_track ON playlist_track.TrackId = tracks.TrackId " \
             "JOIN playlists ON playlists.PlaylistId = playlist_track.PlaylistId " \
@@ -71,8 +72,7 @@ def get_times_info_about_track():
         # show time of all tracks of all albums in hours
         # use info about all tracks
     """
-    query = "SELECT albums.Title, SUM(tracks.Milliseconds)/3600000.0 " \
-            "AS TOTAL FROM albums JOIN tracks ON tracks.AlbumId = albums.AlbumId " \
-            "GROUP BY albums.Title"
+    query = "SELECT albums.Title, SUM(tracks.Milliseconds)/3600000.0 AS TOTAL " \
+            "FROM albums JOIN tracks ON tracks.AlbumId = albums.AlbumId GROUP BY albums.Title"
     result = execute_querry(query=query)
-    return format_records(result)
+    return result
