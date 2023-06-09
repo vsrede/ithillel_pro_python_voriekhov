@@ -1,8 +1,8 @@
 from flask import Flask
-from webargs import fields
+from webargs import fields, validate
 from webargs.flaskparser import use_kwargs
 from homework_4.utilities.utilities import format_records, execute_querry
-
+# $env:FLASK_APP = "homework_4/main"
 app = Flask(__name__)
 
 
@@ -26,7 +26,7 @@ def order_price(country):
         # join two tables invoices and invoices_items
         pass
         # show sales by country on page / if no country show all sales by all counties."""
-    if country == "" or country == '""':
+    if country == "":
         query = "SELECT invoices.BillingCountry, SUM(invoice_items.UnitPrice * invoice_items.Quantity) " \
                 "AS TOTAL FROM invoice_items JOIN invoices ON invoice_items.InvoiceId = invoices.InvoiceId " \
                 "GROUP BY invoices.BillingCountry"
@@ -42,7 +42,7 @@ def order_price(country):
 @app.route("/get-all-info-about-track")
 @use_kwargs(
     {
-        "track_id": fields.Int(missing=1)
+        "track_id": fields.Int(missing=1, validate=lambda val: val < 10)
     },
     location="query"
 )
