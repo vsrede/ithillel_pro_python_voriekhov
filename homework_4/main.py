@@ -1,5 +1,5 @@
 from flask import Flask
-from webargs import fields, validate
+from webargs import fields
 from webargs.flaskparser import use_kwargs
 from homework_4.utilities.utilities import format_records, execute_querry
 # $env:FLASK_APP = "homework_4/main"
