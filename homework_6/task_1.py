@@ -25,5 +25,8 @@ def main():
     print(my_circle_two.contains(my_point_two))
 
 
+a = 'rOck'
+print(a.capitalize())
+
 if __name__ == '__main__':
     main()
