@@ -4,14 +4,13 @@ next element.
 
 Example:
 ["Keep", "Remove", "Keep", "Remove", "Keep", ...] --> ["Keep", "Keep", "Keep", ...]"""
+import math
 
 
 def remove_every_other(my_list):
-    result = []
-    result.append(my_list[0])
-    for i in range(2, len(my_list), 2):
-        result.append(my_list[i])
-    return result
+    indexes = slice(0, len(my_list), 2)
+    # return my_list[::2]
+    return my_list[indexes]
 
 
 """Your goal in this kata is to implement a difference function, which subtracts one list from another and returns the
@@ -26,7 +25,8 @@ array_diff([1,2,2,2,3],[2]) == [1,3]"""
 
 
 def array_diff(a, b):
-    return [x for x in a if x not in b]
+    b_set = set(b)
+    return [x for x in a if x not in b_set]
 
 
 """My friend John and I are members of the "Fat to Fit Club (FFC)". John is worried because each month a list with 
@@ -57,10 +57,10 @@ consecutive numbers
 For C: The result is freed."""
 
 
-def order_weight(strng):
-    bar = sorted(strng.split(' '))
-    baz = sorted(bar, key=foo)
-    return " ".join(baz)
+def order_weight(weights):
+    weights_list = sorted(weights.split(' '))
+    sorted_weights = sorted(weights_list, key=foo)
+    return " ".join(sorted_weights)
 
 
 def foo(n):
@@ -74,10 +74,9 @@ move_zeros([1, 0, 1, 2, 0, 1, 3]) # returns [1, 1, 2, 1, 3, 0, 0]"""
 
 
 def move_zeros(lst):
-    count_zero = len([x for x in lst if x == 0])
+    count_zero = lst.count(0)
     result = [x for x in lst if x != 0]
-    for i in range(count_zero):
-        result.append(0)
+    result.extend([0] * count_zero)
     return result
 
 
@@ -98,8 +97,6 @@ zeros(12) = 2
 
 
 def zeros(n):
-    cnt = 0
-    while n > 4:
-        cnt += n // 5
-        n //= 5
-    return cnt
+    factorial = str(math.factorial(n))
+    count_zero = factorial.count('0')
+    return count_zero

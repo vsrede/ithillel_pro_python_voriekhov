@@ -17,10 +17,10 @@ def new_format(string):
     new_string = ""
     count = 0
 
-    for _ in string:
+    for value in string:
         if count % 3 == 0 and count != 0:
             new_string += "."
-        new_string += _
+        new_string += value
         count += 1
 
     new_string = new_string[::-1]
