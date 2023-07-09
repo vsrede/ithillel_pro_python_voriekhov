@@ -7,10 +7,8 @@ Example:
 import math
 
 
-def remove_every_other(my_list):
-    indexes = slice(0, len(my_list), 2)
-    # return my_list[::2]
-    return my_list[indexes]
+def remove_every_other(target_list):
+    return target_list[::2]
 
 
 """Your goal in this kata is to implement a difference function, which subtracts one list from another and returns the
