@@ -4,7 +4,7 @@ import statistics
 
 
 def filter_list(lst):
-    result = [x for x in lst if isinstance(x, int)]
+    result = list(filter(lambda x: isinstance(x, int), lst))
     return result
 
 
@@ -46,7 +46,6 @@ point to the given array!"""
 
 
 def better_than_average(class_points, your_points):
-    # return (sum(class_points) / len(class_points)) < your_points
     mean_value = statistics.mean(class_points)
     return mean_value < your_points
 
