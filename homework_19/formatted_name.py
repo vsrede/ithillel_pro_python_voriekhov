@@ -59,3 +59,7 @@ class TestFormattedName(unittest.TestCase):
     def test_space_full_date(self):
         result = formatted_name(" vlad", "olegov ", middle_name="sergio")
         self.assertEqual(result, 'Vlad Sergio Olegov')
+
+
+if __name__ == '__main__':
+    unittest.main()

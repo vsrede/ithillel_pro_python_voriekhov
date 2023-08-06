@@ -51,3 +51,7 @@ class TestFibonacci(unittest.TestCase):
     def test_large_numbers(self):
         self.assertEqual(self.fib(400),
                          176023680645013966468226945392411250770384383304492191886725992896575345044216019675)
+
+
+if __name__ == '__main__':
+    unittest.main()
