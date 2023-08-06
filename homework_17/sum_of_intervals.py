@@ -5,16 +5,6 @@ Intervals
 Intervals are represented by a pair of integers in the form of an array. The first value of the interval will always be
 less than the second value. Interval example: [1, 5] is an interval from 1 to 5. The length of this interval is 4."""
 
-# ________the first option for which there was not enough memory😁
-# def sum_of_intervals(intervals):
-#     result = []
-#     for couple in intervals:
-#         for digit in range(couple[0], couple[1]):
-#             result.append(digit)
-#
-#     result = len(set(result))
-#     return result
-
 
 def sum_of_intervals(intervals):
     intervals.sort(key=lambda x: x[0])
@@ -40,10 +30,3 @@ assert sum_of_intervals([(1, 5), (6, 10)]) == 8
 assert sum_of_intervals([(-1_000_000_000, 1_000_000_000)]) == 2_000_000_000
 assert sum_of_intervals([(0, 20), (-100_000_000, 10), (30, 40)]) == 100_000_030
 print("__________OK__________")
-
-
-
-
-
-
-
