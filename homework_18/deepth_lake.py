@@ -2,7 +2,6 @@ def calculate_deepth_lake(heights):
     if len(heights) < 2:
         return None
     # list_result = []
-    # зліва направо шукаєм макс глубіну
     # for i in range(len(heights)):
     #     next_num = i+1
     #     while next_num < len(heights) and heights[i] > heights[next_num]:
@@ -10,7 +9,6 @@ def calculate_deepth_lake(heights):
     #             list_result.append(heights[i] - heights[next_num])
     #         next_num += 1
     #
-    # # зправа наліво шукаєм макс глубіну
     # for i in range(len(heights) - 1, -1, -1):
     #     next_num = i - 1
     #     while next_num >= 0 and heights[next_num] < heights[i]:
@@ -22,9 +20,6 @@ def calculate_deepth_lake(heights):
     left_point, right_point = 0, len(heights) - 1
 
     while left_point < right_point:
-        # йдемо зліва на зправа на зустріч там шукаємо басейни. Якщо басейн знайдено то перевіряємо чи нема у цьому
-        # басейні меньших висот, які зараз маємо. Якщо ні, зберігаємо глибину, якщо так рахуємо та додаємо нову глибину
-        # (якщо більше існуючої)
         left_height, right_height = heights[left_point], heights[right_point]
         if left_height < right_height:
             next_point = left_point + 1
