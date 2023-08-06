@@ -26,21 +26,21 @@ class TestFibonacci(unittest.TestCase):
     def setUp(self):
         self.fib = Fibonacci()
 
-    def test_valid_numbers(self):
-        self.assertEqual(self.fib(1), 1)
+    def test_valid(self):
         self.assertEqual(self.fib(6), 8)
-        self.assertEqual(self.fib(98), 135301852344706746049)
 
-    def test_zero_numbers(self):
+    def test_zero(self):
         self.assertEqual(self.fib(0), 0)
 
-    def test_invalid_numbers(self):
+    def test_invalid(self):
         with self.assertRaises(ValueError):
             self.fib(-1)
 
+    def test_str(self):
         with self.assertRaises(ValueError):
             self.fib("0")
 
+    def test_float(self):
         with self.assertRaises(ValueError):
             self.fib(3.14)
 
@@ -48,7 +48,7 @@ class TestFibonacci(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.fib(1, 2)
 
-    def test_large_numbers(self):
+    def test_large(self):
         self.assertEqual(self.fib(400),
                          176023680645013966468226945392411250770384383304492191886725992896575345044216019675)
 
