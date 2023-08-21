@@ -4,19 +4,19 @@ class custom_map:
         self.input_dict = input_dict
         self.key_func = key_func
         self.value_func = value_func
+        self.key_iter = iter(input_dict)
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        key = next(self.key_iter)
-        key_new = self.key_func(key)
-        value = self.value_func(self.input_dict[key])
-        return key_new, value
-
-    def items(self):
-        self.key_iter = iter(self.input_dict)
-        return self
+        try:
+            key = next(self.key_iter)
+            key_new = self.key_func(key)
+            value = self.value_func(self.input_dict[key])
+            return key_new, value
+        except StopIteration:
+            raise StopIteration
 
 
 def square_key(key):
@@ -29,6 +29,7 @@ def cube_value(value):
 
 input_dict = {'apple': 2, 'banana': 3, 'lemon': 4}
 
-custom_mapped = dict(custom_map(input_dict, square_key, cube_value).items())
+custom_mapped = custom_map(input_dict, square_key, cube_value)
 
-print(custom_mapped)
+for key, value in custom_mapped:
+    print(key, value)
