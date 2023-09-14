@@ -32,7 +32,7 @@ def fill_data(n):
 if __name__ == '__main__':
     time_work = []
     number_workers = []
-    for workers in range(1, 13):
+    for workers in range(1, 9):
         with Timer() as timer:
             with multiprocessing.Pool(workers) as pool:
                 input_data = [DATA_SIZE // workers for _ in range(workers)]
@@ -48,4 +48,5 @@ if __name__ == '__main__':
     )
     fig.show()
 
-
+# workers = [1, 2, 3, 4, 5, 6, 7, 8]
+# result = [0.860, 0.614, 0.504, 0.478, 0.522, 0.553, 0.616, 0.604]
