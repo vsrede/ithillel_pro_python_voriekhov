@@ -1,5 +1,3 @@
-
-
 import time
 import os
 import random
@@ -68,7 +66,3 @@ fig = go.Figure(
                      y=time_work, mode='lines+markers')],
 )
 fig.show()
-
-
-
-

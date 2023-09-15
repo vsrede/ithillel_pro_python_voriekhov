@@ -4,6 +4,7 @@ import random
 import string
 import requests
 from multiprocessing.pool import ThreadPool
+import plotly.graph_objects as go
 
 
 def clear_img_folder():
@@ -38,7 +39,7 @@ def fetch_pic(num_pic):
                 f.write(response.content)
 
 
-workers = 256
+workers = 32
 DATA_SIZE = 10
 
 with timer("Elapsed: {}s"):
@@ -48,7 +49,6 @@ with timer("Elapsed: {}s"):
 
     clear_img_folder()
 
-
-workers_list = [1, 2, 4, 8, 16, 32, 64, 256]
-result_list = [4.39, 2.59, 1.82, 0.557,  0.008, 0.003, 0.011, 0.063]
+workers_list = [1, 2, 4, 8, 16, 24, 32, 40]
+result_list = [4.39, 2.59, 1.82, 0.557, 0.008, 0.012, 0.017, 0.019]
 
